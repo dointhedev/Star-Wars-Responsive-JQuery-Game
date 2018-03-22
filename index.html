@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Font Awesome Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="assets/js/starwars.js"></script>
+    <title>Star Wars Game - The RPG Experience</title>
+</head>
+
+<body>
+    <div class="container text-center">
+        <div class="row fixed-top">
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="scoreBoard" class="d-none sticky-top">
+            <div id="fighterHAlert" class="col-12 alert alert-success" role="alert">
+
+            </div>
+            <div id="enemyHAlert" class="col-12 alert alert-danger" role="alert">
+
+            </div>
+        </div>
+        <div class="row">
+            <header class="col-12 text-sm-right text-center py-2">
+                <h1>Star Wars RPG!</h1>
+            </header>
+        </div>
+        <div id="fighters" class="pb-2 text-sm-left text-center">
+          </div>
+        <div class="row">
+                    <div id="fighterActive" class="col-12 col-sm-4">
+                            <div id="yourCharacter" class="col-12  pt-4 pb-2">
+                                </div>
+                            </div>
+                    <div id="enemyActive" class="col-12 col-sm-8"></div>       
+                   
+       
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-start">
+                <!-- Once player chooses their fighter, remaining fighters are moved here -->
+                <div id="EATA">
+
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div id="attack" class="col-12 text-sm-left text-center pt-4 pb-2">
+                <button id="attack-btn">Attack</button>
+            </div>
+        </div>
+        <div class="row">
+            <div  id="defeated" class="col-12 text-left pt-4 pb-2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-left pt-4 pb-2">
+                <span id="chosen-enemy"></span>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

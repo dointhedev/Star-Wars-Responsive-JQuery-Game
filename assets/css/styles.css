@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*----------------------------------------------------------------
+[Table of contents]
+
+1. GLOBAL 
+2. SITE COLORS
+3. TYPOGRAPHY
+4. ELEMENTS
+
+-------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------
+1. GLOBAL 
+-------------------------------------------------------------------*/
+
+body {
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+.reg_border{
+border: 1px solid rgba(192,192,192,0.6);
+
+
+}
+
+/*----------------------------------------------------------------
+4. ELEMENTS 
+-------------------------------------------------------------------*/
+
+#scoreBoard{
+    opacity: .6;
+}
+
+.fighter:hover{
+cursor: pointer;
+border: 1px solid rgba(63, 191, 127,0.6);
+}
+.fighter:active{
+    border: 1px solid rgba(191, 63, 67,0.6);
+}
+.activeFighter{
+    border: 1px solid rgba(63, 191, 127,0.6);
+    }
+.activeEnemy{
+    border: 1px solid rgba(191, 63, 67,0.6);
+        }
