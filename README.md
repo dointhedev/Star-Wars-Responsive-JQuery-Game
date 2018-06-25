@@ -1,11 +1,26 @@
 # Star-Wars-Responsive-JQuery-Game
-### Instructions on how to play the best game ever! 
+> ### Demonstrate the use of jQuery and javascript to create a Star Wars game.
+
+# Project Overview
+
+This repo shows my ability to code in JQuery and Javascript. I use Objects, Event Listeners and Iterations to bring this game to life. 
+
+## View Demo  
+
+To view demo click on this link: ([Demo Link](https://dointhedev.github.io/Star-Wars-Responsive-JQuery-Game)).
+
+## Instructions on how to play the best game ever! 
 1. Look at yourself in the mirror and say the following; *"I AM AWESOME AND I CAN DO THIS"*
-1. Then go to this link and start your journey https://dointhedev.github.io/Star-Wars-Responsive-JQuery-Game/
-1. If your fealing a bit crappy today choose a Star Wars Villain or you can always choose the classic good guys. 
-1. Remeber you can not begin the game without chooseing your characters so don't get stuck. 
-1. Click the attack button in order to send power blows to your opponent. 
-1. In the background we have monkeys working none stop calculating power points to see who will remain in the end. 
-1. To win this entire game you need to win all your opponents. 
-1. The best part is waiting until the very end when your waiting for something to happen after you win and nothing does. You will only have the game restart just  becuase....
-  
+2. When the game starts, the player will choose a character by clicking on the fighter's picture. The player will fight as that character for the rest of the game.
+3. The player must then defeat all of the remaining fighters. Enemies should be moved to a different area of the screen.
+4. The player chooses an opponent by clicking on an enemy's picture.
+5. Once the player selects an opponent, that enemy is moved to a `defender area`.
+6. The player will now be able to click the `attack` button.
+     a. Whenever the player clicks `attack`, their character damages the defender. The opponent will lose `HP` (health points). These points are displayed at the bottom of the defender's picture. 
+     b.The opponent character will instantly counter the attack. When that happens, the player's character will lose some of their `HP`. These points are shown at the bottom of the player character's picture.
+
+7. The player will keep hitting the attack button in an effort to defeat their opponent.
+
+     a. When the defender's `HP` is reduced to zero or below, remove the enemy from the `defender area`. The player character can now choose a new opponent.
+
+8. The player wins the game by defeating all enemy characters. The player loses the game if their character's `HP` falls to zero or below.
