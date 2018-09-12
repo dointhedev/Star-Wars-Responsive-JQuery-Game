@@ -25,54 +25,32 @@
     </div>
 
     <div class="container">
-        <div id="scoreBoard" class="d-none sticky-top">
-            <div id="fighterHAlert" class="col-12 alert alert-success" role="alert">
-
-            </div>
-            <div id="enemyHAlert" class="col-12 alert alert-danger" role="alert">
-
-            </div>
-        </div>
         <div class="row">
-            <header class="col-12 text-sm-right text-center py-2">
-                <h1>Star Wars RPG!</h1>
+            <header class="col-12 text-center pt-4 pb-3">
+                <h1><img src="assets/images/logo.png" /></h1>
             </header>
         </div>
-        <div id="fighters" class="pb-2 text-sm-left text-center">
-          </div>
         <div class="row">
-                    <div id="fighterActive" class="col-12 col-sm-4">
-                            <div id="yourCharacter" class="col-12  pt-4 pb-2">
-                                </div>
-                            </div>
-                    <div id="enemyActive" class="col-12 col-sm-8"></div>       
-                   
-       
+            <div class="col-4">
+                <div id="fighterActive"></div>
+            </div>
+            <div class="col-4 d-flex justify-content-center py-5">
+                <div id="attack"></div>
+            </div>
+            <div class="col-4">
+                <div id="enemyActive"></div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-12 d-flex justify-content-start">
-                <!-- Once player chooses their fighter, remaining fighters are moved here -->
-                <div id="EATA">
 
-                </div>
-            </div>
+        <div class="row">
+            <div class="col-12">
+            <div id="fighters" class="pb-2 text-center"></div>
         </div>
-        <div class="row ">
-            <div id="attack" class="col-12 text-sm-left text-center pt-4 pb-2">
-                <button id="attack-btn">Attack</button>
-            </div>
         </div>
         <div class="row">
-            <div  id="defeated" class="col-12 text-left pt-4 pb-2">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 text-left pt-4 pb-2">
-                <span id="chosen-enemy"></span>
-            </div>
+            <div id="dead" class="col-12 col-sm-8"></div>
         </div>
     </div>
-
 </body>
 
 </html>
