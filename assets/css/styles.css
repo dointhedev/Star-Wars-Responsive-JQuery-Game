@@ -47,6 +47,7 @@ body {
 .defeated {
     border: 1px solid #a8a7a780;
     background-color: #2c2a28b3;
+    min-height: 307px;
 }
 
 .w-96 {
