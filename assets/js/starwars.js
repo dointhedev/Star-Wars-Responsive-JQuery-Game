@@ -6,11 +6,11 @@ $(document).ready(startScreen);
 /*::::::DATA SETS::::::*/
 
 // This is where I add the active player stats that has been chose by user. 
-var activeObj = {};
+const activeObj = {};
 // This is where I add the active enemy stats that has been chose by user. 
-var enemyObj = {};
+const enemyObj = {};
 // Object to push defeated fighter too. 
-var defeatedObj = {};
+let currentEnemy = '';
 
 // Fighter stats.
 const fighterObj = {
@@ -81,14 +81,13 @@ function genCard(fighter, obj, num) {
 }
 
 
-function genFighters(object, event) {
-    const imgCont = genElement("<div>", `${event !== null ? "images" : "images def-cont"} images py-4  d-flex flex-sm-row flex-column px-3 py-2 mt-4`, null);
-  
-    for (let el in object) {
-        console.log(object[el])
+function genFighters() {
+    const imgCont = genElement("<div>", `images py-4  d-flex flex-sm-row flex-column px-3 py-2 mt-4`, null);
+
+    for (let el in fighterObj) {
         const imgDiv = genElement("<div>", `${el} col-sm-3 fightImages text-center mt-2`, null);
-        const fImg = genElement("<img>", `img-fluid ${event !== null ? event : "def-Fight"} reg_border px-2 py-1 mt-1`, el).attr("src", object[el].img);
-        const span = genElement("<div>", `fightStats text-center text-white d-block py-2`, null).html(`<b>Power:</b> ${object[el].power}`)
+        const fImg = genElement("<img>", ` fighter img-fluid reg_border px-2 py-1 mt-1`, el).attr("src", fighterObj[el].img);
+        const span = genElement("<div>", `fightStats text-center text-white d-block py-2`, null).html(`<b>Power:</b> ${fighterObj[el].power}`)
         imgDiv.append(fImg, span)
         imgCont.append(imgDiv)
         
@@ -134,6 +133,7 @@ function choosePlayer() {
             actvFtr.html(genCard(ftrId, activeObj[ftrId], 0)).prepend("<strong>Your Fighter:</strong>").addClass("text-center");
             delete fighterObj[ftrId];
         } else {
+            currentEnemy = $(this).attr("id");
             enemyObj[ftrId] = fighterObj[ftrId];
             $(".remove-title").text("Remaining Enemy Queue").addClass("mt-5");
             actvEnmy.html(genCard(ftrId, enemyObj[ftrId], 1)).prepend("<strong>Your Enemy:</strong>").addClass("text-center");
@@ -191,22 +191,27 @@ function attack() {
 }
 
 function nextRound() {
+    console.log("in next roun")
     $("#attack-btn").hide();
     const def = JSON.stringify(enemyObj).replace(/[":]/g, "").split("{");
     const defFighter = def[1];
     const aObj = activeObj[Object.keys(activeObj)[0]];
+    const eObj = enemyObj[Object.keys(enemyObj)[0]]
+    console.log(currentEnemy)
+    console.log(eObj)
     aObj.health = 100;
 
     $('#hlthBr-0').attr("style", `width: ${aObj.health}%`).attr("aria-valuenow", aObj.health).text(`${aObj.health}%`)
-    defeatedObj[defFighter] = enemyObj[defFighter]
-    console.log(`NEXT ROUND LOG: ${JSON.stringify(defeatedObj)}`)
+
+
+    const imgCont = $(".defeated");
+    const imgDiv = genElement("<div>", `${defFighter} col-sm-3 fightImages text-center mt-2`, null);
+    const fImg = genElement("<img>", `img-fluid reg_border px-2 py-1 mt-1`, defFighter).attr("src", enemyObj.img);
+    imgDiv.append(fImg)
+    imgCont.append(imgDiv)
     delete enemyObj[defFighter];
     $('#enemyActive').empty();
     $('#fightCol').removeClass("col-12").addClass("col-6")
     $('#deadCol').removeClass("d-none").addClass("d-block");
-    const defImg = genFighters(defeatedObj, "");
-    const dead = $("#dead");
-    dead.empty();
-    dead.append(defImg)
     $(".remove-title ").text("Select Another Victim")
 }
