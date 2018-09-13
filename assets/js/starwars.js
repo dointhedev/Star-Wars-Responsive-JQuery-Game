@@ -205,8 +205,8 @@ function nextRound() {
 
 
     const imgCont = $(".defeated");
-    const imgDiv = genElement("<div>", `${defFighter} col-sm-3 fightImages text-center mt-2`, null);
-    const fImg = genElement("<img>", `img-fluid reg_border px-2 py-1 mt-1`, defFighter).attr("src", enemyObj.img);
+    const imgDiv = genElement("<div>", `${currentEnemy} col-sm-3 fightImages text-center mt-2`, null);
+    const fImg = genElement("<img>", `img-fluid reg_border px-2 py-1 mt-1`, currentEnemy).attr("src", enemyObj[currentEnemy].img);
     imgDiv.append(fImg)
     imgCont.append(imgDiv)
     delete enemyObj[defFighter];
