@@ -11,10 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/styles.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-    <script src="assets/js/starwars.js"></script>
-    <title>Star Wars Game - The RPG Experience</title>
+
+    <title>Star Warp Game - The RPG Experience</title>
 </head>
 
 <body>
@@ -26,11 +24,11 @@
 
     <div class="container">
         <div class="row">
-            <header class="col-12 text-center pt-4 pb-3">
+            <header class="col-12 text-center pt-4 pb-5">
                 <h1><img src="assets/images/logo.png" /></h1>
             </header>
         </div>
-        <div class="row">
+        <div id="active-area" class="row d-none">
             <div class="col-4">
                 <div id="fighterActive"></div>
             </div>
@@ -43,14 +41,42 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div id="fightCol" class="col-12">
             <div id="fighters" class="pb-2 text-center"></div>
         </div>
-        </div>
-        <div class="row">
-            <div id="dead" class="col-12 col-sm-8"></div>
+        <div id="deadCol" class="col-6 d-none">
+                <h3 class="dead-txt text-center mt-5">Defeated Enemies</h3>
+                <div id="dead" class="pb-2 text-center"></div>
+            </div>
         </div>
     </div>
-</body>
+    <div id="modalS" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 id="m-title" class="modal-title"></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p id="m-body"></p>
+                </div>
+                <div class="modal-footer">
+                  <button id="btnS" type="button" class="btn" data-dismiss="modal"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- jQuery -->
+          <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+          <!-- Popper JS  -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+          <!-- Bootstrap JS -->
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+          <!-- The Game's JS -->
+          <script src="assets/js/starwars.js"></script>
+        </body>
 
 </html>
+

@@ -2,6 +2,7 @@
 // Document load start JS process 
 $(document).ready(startScreen);
 
+
 /*::::::DATA SETS::::::*/
 
 // This is where I add the active player stats that has been chose by user. 
@@ -36,9 +37,13 @@ const fighterObj = {
         power: 150,
         counter: 100,
         img: 'assets/images/darthVader.png'
-    },
+    }
 
 };
+
+function restart() {
+    document.location.reload();
+}
 
 function genElement(type, className, id) {
     const el = $(type).addClass(className);
@@ -58,8 +63,8 @@ function genStats(fighter) {
 }
 
 function genCard(fighter, obj, num) {
-    const card = genElement("<div>", "card d-flex flex-row", `card-${fighter}`)
-    const row = genElement("<div>", "row no-gutters", null)
+    const card = genElement("<div>", "card d-flex flex-row  pt-2 px-1", `card-${fighter}`)
+    const row = genElement("<div>", `${fighter === "lukeSkywalker" ? "row no-gutters" : "row no-gutters w-96"}`, null)
     const colAuto = genElement("<div>", "col-auto", null)
     const ftrImg = genElement("<img>", "img-fluid mx-2 mb-2", null).attr("src", `assets/images/${fighter}.png`)
     const col = genElement("<div>", "col", null)
@@ -76,52 +81,71 @@ function genCard(fighter, obj, num) {
 }
 
 
-function genFighters() {
-    const imgCont = genElement("<div>", 'images py-4  d-flex flex-sm-row flex-column pt-4 mt-4', null);
-
-    for (let el in fighterObj) {
-        const imgDiv = genElement("<di>", `${el} col-sm-3 fightImages text-center mt-2`, null);
-        const fImg = genElement("<img>", 'img-fluid fighter reg_border px-2 py-1 mt-1', el).attr("src", fighterObj[el].img);
-        const span = genElement("<div>", `fightStats text-center text-white d-block py-2`, null).html(`<b>Power:</b> ${fighterObj[el].power}`)
+function genFighters(object, event) {
+    const imgCont = genElement("<div>", `${event !== null ? "images" : "images def-cont"} images py-4  d-flex flex-sm-row flex-column px-3 py-2 mt-4`, null);
+  
+    for (let el in object) {
+        console.log(object[el])
+        const imgDiv = genElement("<div>", `${el} col-sm-3 fightImages text-center mt-2`, null);
+        const fImg = genElement("<img>", `img-fluid ${event !== null ? event : "def-Fight"} reg_border px-2 py-1 mt-1`, el).attr("src", object[el].img);
+        const span = genElement("<div>", `fightStats text-center text-white d-block py-2`, null).html(`<b>Power:</b> ${object[el].power}`)
         imgDiv.append(fImg, span)
         imgCont.append(imgDiv)
+        
     }
     return imgCont;
 }
 
-
+function genModal(state, title, body, style, btnText, bool) {
+    $('#modalS').modal(state)
+    $('#m-title').text(title)
+    $('#m-body').text(body)
+    const btn = $('#btnS');
+    btnText !== null ? btn.addClass(style).text(btnText) : btn.remove();
+    bool ? btn.click(restart) :
+        btn.click(nextRound);
+}
 
 
 function startScreen() {
     fightCont = $("#fighters");
     const h3 = genElement("<h3>", 'remove-title text-center', null).text("Choose a Fighter");
-    const fighterImages = genFighters();
+    const fighterImages = genFighters(fighterObj, "fighter");
     //  const btn = genElement("<button>", 'btn btn-outline-light', 'attack-btn').text("Start The Game");
     fightCont.append(h3, fighterImages);
-    $(".fighter").click(chsPlr);
-
+    $(".fighter").click(choosePlayer);
 }
 
 
-function chsPlr() {
+function choosePlayer() {
     const atkBtn = $("#attack");
     const ftrId = $(this).attr("id");
     const actvFtr = $("#fighterActive");
     const actvEnmy = $("#enemyActive");
     const btn = genElement("<button>", 'btn btn-danger', 'attack-btn').text("ATTACK!!");
 
-    $("." + ftrId).addClass("d-none");
 
-    if (jQuery.isEmptyObject(activeObj)) {
-        activeObj[ftrId] = fighterObj[ftrId];
-        $(".remove-title").text("Choose an Enemy");
-        actvFtr.html(genCard(ftrId, fighterObj[ftrId], 0)).prepend("<strong>Your Fighter:</strong>");
-    } else {
-        enemyObj[ftrId] = fighterObj[ftrId];
-        $(".remove-title").text("Remaining Enemy Queue").addClass("mt-5");
-        actvEnmy.html(genCard(ftrId, fighterObj[ftrId], 1)).prepend("<strong>Your Enemy:</strong>");
-        atkBtn.html(btn);
-        $("#attack-btn").click(attack);
+    if ((jQuery.isEmptyObject(activeObj)) || (jQuery.isEmptyObject(enemyObj))) {
+        $("." + ftrId).remove();
+        if (jQuery.isEmptyObject(activeObj)) {
+            $("#active-area").removeClass("d-none")
+            activeObj[ftrId] = fighterObj[ftrId];
+            $(".remove-title").text("Choose an Enemy");
+            actvFtr.html(genCard(ftrId, activeObj[ftrId], 0)).prepend("<strong>Your Fighter:</strong>").addClass("text-center");
+            delete fighterObj[ftrId];
+        } else {
+            enemyObj[ftrId] = fighterObj[ftrId];
+            $(".remove-title").text("Remaining Enemy Queue").addClass("mt-5");
+            actvEnmy.html(genCard(ftrId, enemyObj[ftrId], 1)).prepend("<strong>Your Enemy:</strong>").addClass("text-center");
+            delete fighterObj[ftrId];
+            atkBtn.html(btn);
+            $("#attack-btn").click(attack);
+        }
+    }
+
+    if (jQuery.isEmptyObject(fighterObj)) {
+        $("#fightCol").empty();
+        $('#deadCol').removeClass("col-6").addClass("col-12")
     }
 }
 
@@ -139,86 +163,50 @@ function attack() {
     const fighterNumb = Math.floor(Math.random() * fighterPower);
     const enemyNumb = Math.floor(Math.random() * enemyPower);
 
+
     // Animation complete.
-    if ((fighterHealth > 0) && (enemyHealth > 0)) {
+    if ((aObj.health > 0) && (eObj.health > 0)) {
         if (fighterNumb >= enemyNumb) {
-            console.log("Fighter Won");
             aObj.health = aObj.health - 10;
             $('#hlthBr-0').attr("style", `width: ${aObj.health}%`).attr("aria-valuenow", aObj.health).text(`${aObj.health}%`)
         } else {
-            console.log("Fighter Loss");
-            eObj.health = enemyHealth - 10;
+            eObj.health = eObj.health - 10;
             $('#hlthBr-1').attr("style", `width: ${eObj.health}%`).attr("aria-valuenow", eObj.health).text(`${eObj.health}%`)
-            //console.log(defeatedFighterObj);
         }
-    } else{
-        fighterHealth > enemyHealth ?
-         win(): lose();
+    } else {
+        if ((jQuery.isEmptyObject(fighterObj)) && (enemyHealth === 0)) {
+            genModal("show", "You Won The Game YOO HOO!", "Thank you for playing your game will restart in a moment.", "start-over btn-primary", null, true)
+            setTimeout(() => {
+                return restart()
+            }, 2000);
+
+        } else {
+            (!jQuery.isEmptyObject(fighterObj)) && (fighterHealth > enemyHealth) ?
+            genModal("show", "You Won!", "Ready for the next round?", "next-round btn-success", "Next Round", false):
+                genModal("show", "You Lost!", "Would You like to play again?", "start-over btn-danger", "Start Over", true);
+        }
+
+
     }
 }
-function win(){
-    alert("You Won")
-}
-function lose(){
-    alert("You Lost")
-}
-//         if ((fighterHealth > enemyHealth)) {
-//             $.extend(defeatedObj, defeatedObj);
-
-//             delete enemyObj.power;
-//             delete enemyObj.health;
-//             delete enemyObj.counter;
-//             // Test your Objects with the following code 
-//             var strA = JSON.stringify(activeObj, null, 4); // this turns the object into a string and makes it easy to read in the console.
-//             console.log("active:" + strA);
-
-//             var strB = JSON.stringify(fighterObj, null, 4);
-//             console.log("fighter:" + strB);
-
-//             var strC = JSON.stringify(enemyObj, null, 4);
-//             console.log("enemy:" + strC);
-
-//             var strD = JSON.stringify(defeatedObj, null, 4);
-//             console.log("defeated:" + strD);
-
-
-//             console.log("Fighter WIIIINNNS");
-//             $("#enemyHAlert").html("");
-//             $("#fighterHAlert").html("<strong>You won with:</strong>" + " " + fighterHealth + "%" + " left");
-//             var delayNextRound = setTimeout(function () {
-//                 $("#scoreBoard").removeClass("d-block").addClass("d-none");
-
-
-//                 nextRound();
-
-//             }, 5000);
-
-
-//         } else {
-//             console.log("Fighter LOSSES");
-//             $("#fighterHAlert").html("");
-//             $("#enemyHAlert").html("<strong>You lost with:</strong>" + " " + fighterHealth + "%" + " left");
-//             var delayEndGame = setTimeout(function () {
-//                 $("#scoreBoard").removeClass("d-block").addClass("d-none");
-//                 endGame();
-
-//             }, 5000);
-//         }
-//     }
-// }
 
 function nextRound() {
-    console.log("in nextRound();");
-}
+    $("#attack-btn").hide();
+    const def = JSON.stringify(enemyObj).replace(/[":]/g, "").split("{");
+    const defFighter = def[1];
+    const aObj = activeObj[Object.keys(activeObj)[0]];
+    aObj.health = 100;
 
-function endGame() {
-    $(".remove-title").empty();
-    $(".images").empty();
-    $("#fighters").empty();
-    $("#fighterActive").empty();
-    $("#enemyActive").empty();
-    $("#enemies").empty();
-    startScreen();
-    console.log("endGame()");
+    $('#hlthBr-0').attr("style", `width: ${aObj.health}%`).attr("aria-valuenow", aObj.health).text(`${aObj.health}%`)
+    defeatedObj[defFighter] = enemyObj[defFighter]
+    console.log(`NEXT ROUND LOG: ${JSON.stringify(defeatedObj)}`)
+    delete enemyObj[defFighter];
+    $('#enemyActive').empty();
+    $('#fightCol').removeClass("col-12").addClass("col-6")
+    $('#deadCol').removeClass("d-none").addClass("d-block");
+    const defImg = genFighters(defeatedObj, "");
+    const dead = $("#dead");
+    dead.empty();
+    dead.append(defImg)
+    $(".remove-title ").text("Select Another Victim")
 }
-
